@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe</title>
+    <link href="./styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1>TicTacToe</h1>
+    <p>Game starts by just Tap on box</p>
+    <h3 id="player">Player X turn</h3>
+    <h3 id="end"></h3>
+    <section class="game">
+        <div class="row">
+            <div id="box1" class="cell" onclick="play('box1')"></div>
+            <div id="box2" class="cell" onclick="play('box2')"></div>
+            <div id="box3" class="cell" onclick="play('box3')"></div>
+        </div>
+        <div class="row">
+            <div id="box4" class="cell" onclick="play('box4')"></div>
+            <div id="box5" class="cell" onclick="play('box5')"></div>
+            <div id="box6" class="cell" onclick="play('box6')"></div>
+        </div>
+        <div class="row">
+            <div id="box7" class="cell" onclick="play('box7')"></div>
+            <div id="box8" class="cell" onclick="play('box8')"></div>
+            <div id="box9" class="cell" onclick="play('box9')"></div>
+        </div>
+    </section>
+    <button id="resetButton" onclick="reset()">Reset</button>
+    <script src="./ticTacToe.js"></script>
+</body>
+
+</html>
