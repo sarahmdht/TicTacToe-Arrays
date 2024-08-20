@@ -1,16 +1,6 @@
-/*
-* input: each div value in array - boolean X or O
-*operations: alternate two players 
-*            validate winner in 3 hor. or 3 ver. or 2 diagonals
-*           announce winner
-*            reset button
-* output: store input value
-*         announce winner
-*/
-
 let board = ["", "", "", "", "", "", "", "", ""];
 let player = "X";
-let gameOver = true;
+let gameOver = false;
 
 // Winning combinations
 const winningCombinations = [
@@ -23,7 +13,17 @@ const winningCombinations = [
     [0, 4, 8],
     [2, 4, 6],
 ];
-// Check for a win or draw
+
+// Function to check if the current player has won
+function checkWin() {
+    return winningCombinations.some(combination => {
+        return combination.every(index => {
+            return board[index] === player;
+        });
+    });
+}
+
+// Function to announce the winner or a draw
 function winner() {
     if (checkWin()) {
         alert("Player " + player + " Wins!");
@@ -31,52 +31,59 @@ function winner() {
         return;
     } else if (board.every(cell => cell !== "")) {
         document.getElementById("end").innerText = "It's a draw!";
-        gameOver = false;
+        gameOver = true;
         return;
     }
 }
 
-// Function to check if the current player has won
-function checkWin() {
-    return winningCombinations.some(combination => {
-        return combination.every(index => {
-            return board[index] === currentPlayer;
-        });
-    });
-}
-
 // Function to toggle player
 function togglePlayer() {
-    if (player == "X") {
-        document.getElementById("player").innerHTML = "Player O turn";
+    if (player === "X") {
+        document.getElementById("player").innerHTML = "Player O's turn";
         player = "O";
     } else {
-        document.getElementById("player").innerHTML = "Player X turn";
+        document.getElementById("player").innerHTML = "Player X's turn";
         player = "X";
     }
 }
 
-//cell value alternation
+// Function to handle a move
 function play(box) {
     if (gameOver) {
         return; // Prevent further moves if the game is over
     }
-    if (document.getElementById(box).innerHTML === "") {
+    const index = parseInt(box.charAt(box.length - 1));
+    if (board[index] === "") {
         styling(box);
         document.getElementById(box).innerHTML = player;
+        board[index] = player;
         setTimeout(() => {
             winner();
-            togglePlayer();
-        }
-            , 100);
+            if (!gameOver) {
+                togglePlayer();
+            }
+        }, 100);
     } else {
         alert("This box is already taken!");
+    }
+}
+
+// value styling
+function styling(box){
+    if(player === "X"){
+        document.getElementById(box).style = "color: red;";
+    } 
+    if(player === "O") {
+        document.getElementById(box).style = "color: dodgerblue;";
     }
 }
 
 // Function to reset the game
 function reset() {
     document.querySelectorAll(".cell").forEach(cell => (cell.innerText = ""));
+    board = ["", "", "", "", "", "", "", "", ""];
     gameOver = false;
     player = "X";
+    document.getElementById("player").innerHTML = "Player X's turn";
+    document.getElementById("end").innerText = "";
 }
